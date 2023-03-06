@@ -1,0 +1,73 @@
+{{#if news}}
+  <div class="card align-items-center">
+    <div class="card-body">
+      <h2 class="text-uppercase">{{news.title}}</h2>
+      <h6 class="card-subtitle mb-2 text-muted">
+        Автор:
+        {{news.user.firstName}}
+        {{news.user.lastName}}
+      </h6>
+      <h6 class="card-subtitle text-muted mb-3">
+        Дата создания:
+        {{dateLocal news.createdAt}}
+      </h6>
+      <img
+        class="img-fluid rounded"
+        style="max-height:450px"
+        src="http://localhost:3000{{news.cover}}"
+        alt="cover news"
+      />
+      <p class="card-text mt-3">{{news.description}}</p>
+      <a href="http://localhost:3000/news">
+        <button type="button" class="btn btn-dark mb-2">
+          К новостям
+        </button>
+      </a>
+    </div>
+  </div>
+
+  <div class="card mt-3">
+    {{#if cookies}}
+      {{!-- {{>form-create-comment}} --}}
+    {{else}}
+      <h5 class="text-secondary">Для возможности комментирования Вы можете
+        авторизоваться на сайте</h5>
+    {{/if}}
+    {{! Подключаем ReactJS-скрипт комментариев }}
+    <script
+      src="/js/comments.js"
+      type="text/babel"
+      id="getComments"
+      data-token={{cookies.token.access_token}}
+      data-user-id={{cookies.user.id}}
+    ></script>
+
+    <!-- Блок, куда ReactJS будет вставлять вёрстку комментариев -->
+    <div id="app"></div>
+
+    {{!-- {{#if comments}}
+    <div class="card-body text-start">
+      <h5 class="text-uppercase">Комментарии:</h5>
+
+      <div class="card text-left mt-3">
+        <div class="card-body">
+
+
+
+        </div>
+      </div>
+    </div>
+    {{else}}
+    <h5 class="text-secondary">Для этой новости комментариев нет</h5>
+    {{/if}}
+     --}}
+  </div>
+
+{{else}}
+  <h1 class="text-center">Новость не найдена</h1>
+  <a href="http://localhost:3000/news">
+    <button type="button" class="btn btn-dark mt-3">
+      К новостям
+    </button>
+  </a>
+{{/if}}
